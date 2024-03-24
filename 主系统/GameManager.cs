@@ -54,6 +54,8 @@ public class GameManager : MonoBehaviour
     public int date=1;
     //时间
     public int time=0;//0上午 1中午 2下午 3傍晚 4晚上 5结束一天
+    //遇到狂三的时间
+    public int meetKuangSanTime=0;
     //初始化编队
     public void createTeam()
     {
