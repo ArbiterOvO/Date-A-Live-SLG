@@ -48,4 +48,17 @@ public class SchoolGateUI : Singleton<SchoolGateUI>
             clearAllTag();
         });
     }
+    public void enterHighPlatform()
+    {
+        if(GameManager.instance.gameStatus!=GameStatus.UI可用)
+        return;
+        tag.SetActive(true);
+        tagText.text="是否要前往高台";
+        yes.onClick.AddListener(()=>{
+            SceneManager.LoadScene("HighPlatForm");
+        });
+        no.onClick.AddListener(()=>{
+            clearAllTag();
+        });
+    }
 }

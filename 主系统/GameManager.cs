@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
     public int time=0;//0上午 1中午 2下午 3傍晚 4晚上 5结束一天
     //遇到狂三的时间
     public int meetKuangSanTime=0;
+    //正在进行的特殊事件类别
+    public SpecialEventType specialEventType;
     //初始化编队
     public void createTeam()
     {
@@ -73,8 +75,8 @@ public class GameManager : MonoBehaviour
         //初始化角色
         roles.Add(new BaseRole(0,"五河琴里",QinLi.blood,QinLi.cost,QinLi.power,QinLi.ad,QinLi.ap,QinLi.def,QinLi.mdf));
         roles.Add(new BaseRole(1,"夜刀神十香",ShiXiang.blood,ShiXiang.cost,ShiXiang.power,ShiXiang.ad,ShiXiang.ap,ShiXiang.def,ShiXiang.mdf));
-        //roles.Add(new BaseRole(2,"冰芽川四糸乃",SiSiNai.blood,SiSiNai.cost,SiSiNai.power,SiSiNai.ad,SiSiNai.ap,SiSiNai.def,SiSiNai.mdf));
-        roles.Add(new BaseRole(3,"时崎狂三",KuangSan.blood,KuangSan.cost,KuangSan.power,KuangSan.ad,KuangSan.ap,KuangSan.def,KuangSan.mdf));
+        roles.Add(new BaseRole(2,"冰芽川四糸乃",SiSiNai.blood,SiSiNai.cost,SiSiNai.power,SiSiNai.ad,SiSiNai.ap,SiSiNai.def,SiSiNai.mdf));
+        //roles.Add(new BaseRole(3,"时崎狂三",KuangSan.blood,KuangSan.cost,KuangSan.power,KuangSan.ad,KuangSan.ap,KuangSan.def,KuangSan.mdf));
         //测试
         foreach (BaseRole role in roles)
         {

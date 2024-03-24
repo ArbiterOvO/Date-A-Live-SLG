@@ -40,6 +40,12 @@ public class ShopUI : MonoBehaviour
     public GameObject noMoneyTip;//钱不够
     public GameObject winItemTip;//抓到的东西
 
+    void Start() {
+        if(GameManager.instance.specialEventType==SpecialEventType.猫咪咖啡厅)
+        {
+            petShopEvent();
+        }
+    }
     void Awake() {
         if(instance!=null)
         Destroy(this.gameObject);
@@ -221,5 +227,8 @@ public class ShopUI : MonoBehaviour
         machineCanvas.SetActive(false);
         GameManager.instance.gameStatus=GameStatus.UI可用;
     }
-
+    public void petShopEvent()
+    {
+        
+    }
 }

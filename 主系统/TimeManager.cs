@@ -40,12 +40,18 @@ public class TimeManager : MonoBehaviour
         if(GameManager.instance.time<4)
         {
             timeImage.sprite=dayOrNight[0];
+            if(evening!=null)
             evening.SetActive(false);
+            else
+            Debug.Log("没有夜晚图片");
         }
-        else
+        else if(evening!=null)
         {
             timeImage.sprite=dayOrNight[1];
+            if(evening!=null)
             evening.SetActive(true);
+            else
+            Debug.Log("没有夜晚图片");
         }
         day.text=GameManager.instance.date.ToString();
     }

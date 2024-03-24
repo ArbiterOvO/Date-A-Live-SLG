@@ -507,6 +507,9 @@ public class FightManager : MonoBehaviour
                     case 2:
                         SceneManager.LoadScene("Shrine");
                         break;
+                    case 3:
+                        SceneManager.LoadScene("HighPlatForm");
+                        break;
                 }
             }
         }

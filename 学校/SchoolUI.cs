@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SchoolUI : Singleton<SchoolUI>
 {
@@ -12,6 +13,7 @@ public class SchoolUI : Singleton<SchoolUI>
     //人物图片
     public GameObject shiXiangImage;
     public GameObject kuangSanImage;
+    public Sprite kuangSanLing;
     [Header("事件")]
     //随机教室事件
     public GameObject randomClassRoom;
@@ -66,14 +68,14 @@ public class SchoolUI : Singleton<SchoolUI>
             randomClassRoom.SetActive(false);
         }
 
-        if(GameManager.instance.findRoleByName(ShiXiang.name)!=null&&GameManager.instance.findRoleByName(KuangSan.name)==null&&GameManager.instance.time<4)
-        {
-            kuangSanEvent1.SetActive(true);
-        }
-        else
-        {
-            kuangSanEvent1.SetActive(false);
-        }
+        // if(GameManager.instance.findRoleByName(ShiXiang.name)!=null&&GameManager.instance.findRoleByName(KuangSan.name)==null&&GameManager.instance.time<4)
+        // {
+        //     kuangSanEvent1.SetActive(true);
+        // }
+        // else
+        // {
+        //     kuangSanEvent1.SetActive(false);
+        // }
     }
     //遇到十香进入战斗
     public void meetShiXiang()
@@ -128,13 +130,21 @@ public class SchoolUI : Singleton<SchoolUI>
                 StartCoroutine(waitForChoose2(6));
                 });
         DialogSystem.instance.startDialog(4,d);
+        GameManager.instance.meetKuangSanTime++;
     }
 
     IEnumerator waitForChoose2(int chose)
     {
         yield return new WaitUntil(()=>!DialogSystem.instance.dialogPaneg.activeSelf);
         DialogSystem.instance.startDialog(chose);
+        if(chose==5)
+        {
+            kuangSanImage.GetComponent<Image>().sprite=kuangSanLing;
+        }
+        yield return new WaitUntil(()=>!DialogSystem.instance.dialogPaneg.activeSelf);
+        kuangSanImage.SetActive(false);
     }
+
 
 }
     

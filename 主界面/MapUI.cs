@@ -16,6 +16,9 @@ public class MapUI : MonoBehaviour
         Destroy(this.gameObject);
         instance=this;
     }
+    void Start() {
+        GameManager.instance.currentMap=1;
+    }
     //进入家场景
     public void enterHome()
     {
@@ -38,6 +41,7 @@ public class MapUI : MonoBehaviour
     {
         SceneManager.LoadScene("Apartment");
     }
+    //进入学校
     public void enterSchool()
     {
         tag.SetActive(true);
@@ -49,10 +53,31 @@ public class MapUI : MonoBehaviour
             clearAllTag();
         });
     }
+    //进入神社
     public void enterShrine()
     {
-        SceneManager.LoadScene("Shrine");
-        GameManager.instance.currentMap=2;
+        tag.SetActive(true);
+        tagText.text="是否要前往神社";
+        yes.onClick.AddListener(()=>{
+            GameManager.instance.currentMap=2;
+            SceneManager.LoadScene("Shrine");
+        });
+        no.onClick.AddListener(()=>{
+            clearAllTag();
+        });
+        
+    }
+    //进入天宫塔
+    public void enterTower()
+    {
+        tag.SetActive(true);
+        tagText.text="是否要前往天宫塔";
+        yes.onClick.AddListener(()=>{
+            SceneManager.LoadScene("Tower");
+        });
+        no.onClick.AddListener(()=>{
+            clearAllTag();
+        });
     }
     void clearAllTag()
     {

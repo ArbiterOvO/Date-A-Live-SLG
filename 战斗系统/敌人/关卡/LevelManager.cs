@@ -24,6 +24,8 @@ public class LevelManager : MonoBehaviour
             return new SpecialLevel1();
             case 2:
             return new SpecialLevel2();
+            case 3:
+            return new SpecialLevel3();
         }
         return null;
     }
