@@ -67,5 +67,7 @@ public static class roleUtil
         //物理伤害=敌方ad*(1-物理减伤率)
         float mdfDamage = enemy.Ap*rate*(1-magicRate);
         role.Blood=role.Blood-(defDamage+mdfDamage);
+
+        Debug.Log(role.Blood+" "+role.MaxBlood);
     }
 }

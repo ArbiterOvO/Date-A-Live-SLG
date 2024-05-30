@@ -10,7 +10,7 @@ public class FightChooseManager : PersistentSingleton<FightChooseManager>
     public Dictionary<Item,int> winItem=new Dictionary<Item, int>();//总共物品 数量
     public SerializedDictionary<int,int> winNormalMoney=new SerializedDictionary<int, int>();//正常情况钱的数量 参数1:获得钱的数量 参数2:第几关卡
     public SerializedDictionary<int,SerializedDictionary<Item,int>> winNormalItem=new SerializedDictionary<int, SerializedDictionary<Item, int>>();//正常情况获得的物品 参数1:(1.物品2.物品数量) 参数2:第几关卡
-    public int currentLayerNum;//当前层数
+    public int currentLayerNum=0;//当前层数
     public int fightLayerNum;//战斗层数
     public bool needReset=true;//是否需要重置
     public Vector3 rolePos;

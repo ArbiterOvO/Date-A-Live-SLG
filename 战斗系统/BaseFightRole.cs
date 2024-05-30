@@ -184,12 +184,10 @@ public abstract class BaseFightRole
         FightManager.instance.power-=Cost;
         GameManager.instance.currentPower-=Cost;
         isLing=true;
-        maxBlood*=1.5f;
         Blood+=0.5f*maxBlood;
+        maxBlood*=1.5f;
         ad*=1.5f;
         ap*=1.5f;
-        def*=1.5f;
-        mdf*=1.5f;
         FadeInOut.instance.FadeInAndOUt(this);
         FightUI.instance.clearAllButton();
     }

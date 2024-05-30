@@ -19,6 +19,8 @@ public class FightUI : MonoBehaviour
     public GameObject activeSkillButtonCollection;
     //角色头像图片
     public List<Sprite> roleImages,lingImage;
+    //敌人图片
+    public List<Sprite> enemyImages;
     //己方
     public GameObject roleCollection;
     public List<GameObject> roles;
@@ -35,6 +37,10 @@ public class FightUI : MonoBehaviour
     public Slider powerSlider;
     public Text powerText;
     public TextMeshProUGUI roundText;
+    [Header("背景图片")]
+    public Image backgroundImage;
+    public List<Sprite> normalBackgroundImages;
+    public List<Sprite> specialBackgroundImages;
     [Header("行动方提示")]
     public GameObject ourTurnTip;
     public GameObject enemyTurnTip;
@@ -50,6 +56,8 @@ public class FightUI : MonoBehaviour
     }
 
     private void Start() {
+        //初始化地图
+        changeBackground();
         //初始化人物对象
         instance.roles.Clear();
         for (int i = 0; i < FightManager.instance.fightRoles.Count; i++)
@@ -67,6 +75,7 @@ public class FightUI : MonoBehaviour
             instance.enemies.Add(Instantiate(enemyPrefab));
             instance.enemies[i].transform.SetParent(enemyCollection.transform);
             instance.enemies[i].transform.localScale=new Vector3(1,1,1);
+            instance.enemies[i].transform.Find("Image").GetComponent<Image>().sprite=enemyImages[FightManager.instance.enemyRoles[i].Id];
             instance.enemies[i].GetComponent<FightEnemy>().enemy=FightManager.instance.enemyRoles[i];
         }   
         FightManager.instance.startSkill();
@@ -263,6 +272,16 @@ public class FightUI : MonoBehaviour
 
         
     }
-
+    public void changeBackground()
+    {
+        if (GameManager.instance.specialBattleNum != 0)
+        {
+            backgroundImage.sprite=specialBackgroundImages[GameManager.instance.specialBattleNum-1];
+        }
+        else //非特殊战斗
+        {
+            backgroundImage.sprite=normalBackgroundImages[GameManager.instance.currentMap-1];
+        }
+    }
 
 }

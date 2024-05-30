@@ -121,5 +121,8 @@ public abstract class BaseEnemy
     //
     //是否行动过
     public bool isActed;
+    //特殊技能计数
+    public int speicalSkillCount;
     public abstract void normalAttack();
+    public abstract void speicalSkill();
 }

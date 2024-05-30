@@ -13,6 +13,10 @@ public class LevelManager : MonoBehaviour
             return new Level1();
             case 2:
             return new Level2();
+            case 3:
+            return new Level3();
+            case 4:
+            return new Level4();
         }
         return null;
     }

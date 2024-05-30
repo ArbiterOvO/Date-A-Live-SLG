@@ -29,13 +29,19 @@ public class GameManager : MonoBehaviour
             break;
             case "Shine":
             currentMap=2;
-            break;        
+            break;
+            case "School":
+            currentMap=3;
+            break;
+            case "Tower":
+            currentMap=4;
+            break;
         }
     }
     //游戏状态
     public GameStatus gameStatus=GameStatus.UI可用;
     //特殊战斗
-    public int specialBattleNum=0;
+    public int specialBattleNum=0; 
     //当前所在的地图 1开始
     public int currentMap;
     //通关地图数
@@ -76,7 +82,7 @@ public class GameManager : MonoBehaviour
         roles.Add(new BaseRole(0,"五河琴里",QinLi.blood,QinLi.cost,QinLi.power,QinLi.ad,QinLi.ap,QinLi.def,QinLi.mdf));
         roles.Add(new BaseRole(1,"夜刀神十香",ShiXiang.blood,ShiXiang.cost,ShiXiang.power,ShiXiang.ad,ShiXiang.ap,ShiXiang.def,ShiXiang.mdf));
         roles.Add(new BaseRole(2,"冰芽川四糸乃",SiSiNai.blood,SiSiNai.cost,SiSiNai.power,SiSiNai.ad,SiSiNai.ap,SiSiNai.def,SiSiNai.mdf));
-        //roles.Add(new BaseRole(3,"时崎狂三",KuangSan.blood,KuangSan.cost,KuangSan.power,KuangSan.ad,KuangSan.ap,KuangSan.def,KuangSan.mdf));
+        roles.Add(new BaseRole(3,"时崎狂三",KuangSan.blood,KuangSan.cost,KuangSan.power,KuangSan.ad,KuangSan.ap,KuangSan.def,KuangSan.mdf));
         //测试
         foreach (BaseRole role in roles)
         {

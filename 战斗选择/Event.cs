@@ -20,7 +20,7 @@ public class Event : MonoBehaviour
             FightChooseManager.Instance.rolePos=transform.position;
             //移动角色到指定位置
             FightChooseUI.Instance.player.GetComponent<Player>().movePlayer(transform,eventType);
-            FightChooseUI.Instance.currentEvents[layerNum].SetActive(false);
+            FightChooseUI.Instance.currentEvents[layerNum%4].SetActive(false);
             ++FightChooseManager.Instance.currentLayerNum;
         }
     }
@@ -32,6 +32,8 @@ public class Event : MonoBehaviour
 
     public void turnWhite()
     {
+        if(sprite==null)
+        return;
         sprite.color=Color.white;
     }
 }

@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class Normal1 : BaseEnemy
 {
+    //最普通的小怪
     public Normal1()
     {
-        Id=1;
+        Id=0;
         Name="Normal1";
         Level=1;
         MaxBlood=100;
@@ -46,5 +47,8 @@ public class Normal1 : BaseEnemy
         }
     }
 
-
+    public override void speicalSkill()
+    {
+        
+    }
 }

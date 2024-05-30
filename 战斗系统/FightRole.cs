@@ -35,6 +35,13 @@ public class FightRole : MonoBehaviour, IPointerClickHandler
     public Slider bloodSlider;
     public Slider powerSlider;
     public Text bloodText, powerText;
+    [Header("特殊状态")]
+    //冰冻图片
+    public GameObject icy;
+    //眩晕图片
+    public GameObject vertigo;
+    //时停图片
+    public GameObject timeStop;
     //按钮移动时间
     float time = 0;
     //是否被选择
@@ -60,6 +67,31 @@ public class FightRole : MonoBehaviour, IPointerClickHandler
         lingMode();
         check();
         checkBuffTime();
+        changeStatusImage();
+    }
+    //清空特殊状态图片
+    void clearStatus()
+    {
+        icy.SetActive(false);
+        vertigo.SetActive(false);
+        timeStop.SetActive(false);
+    }
+    //改变特殊状态图片
+    void changeStatusImage()
+    {
+        clearStatus();
+        if(specialStatus==FightSpecialStatus.冰冻)
+        {
+            icy.SetActive(true);
+        }
+        if(specialStatus==FightSpecialStatus.眩晕)
+        {
+            vertigo.SetActive(true);
+        }
+        if(specialStatus==FightSpecialStatus.时间停止)
+        {
+            timeStop.SetActive(true);
+        }
     }
     //绑定按钮事件
     void catchButton()
@@ -163,8 +195,9 @@ public class FightRole : MonoBehaviour, IPointerClickHandler
             hideChosenLight();
             return;
         }
-        //不是己方回合无法点击
-        if (FightManager.instance.fightStatus != FightStatus.己方回合)
+        Debug.Log(specialStatus);
+        //不是己方回合或者处于异常状态 无法点击
+        if (FightManager.instance.fightStatus != FightStatus.己方回合||specialStatus!=FightSpecialStatus.正常)
             return;
 
         time = 0;

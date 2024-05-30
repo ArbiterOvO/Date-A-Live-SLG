@@ -15,7 +15,7 @@ public static class QinLi
     blood=100f,
     cost=10f,
     power=50f,
-    ad=10f,
+    ad=1000f,
     ap=10f,
     def=5f,
     mdf=5f;

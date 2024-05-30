@@ -19,6 +19,8 @@ public class SchoolUI : Singleton<SchoolUI>
     public GameObject randomClassRoom;
     //狂三事件1
     public GameObject kuangSanEvent1;
+    [Header("cg")]
+    public GameObject shiXiangCg;
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +58,10 @@ public class SchoolUI : Singleton<SchoolUI>
     {
         SceneManager.LoadScene("SchoolGate");
     }
+    public void enterFight()
+    {
+        SceneManager.LoadScene("FightChoose");
+    }
     //设置事件
     void createEvent()
     {
@@ -81,6 +87,14 @@ public class SchoolUI : Singleton<SchoolUI>
     public void meetShiXiang()
     {
         enterClassRoom();
+        StartCoroutine(shiXiangIEnumerator());
+    }
+    //
+    IEnumerator shiXiangIEnumerator()
+    {
+        StartCoroutine(IEnumeratorUtil.fadeIn(shiXiangCg));
+        yield return new WaitForSeconds(2f);
+        StartCoroutine(IEnumeratorUtil.fadeOut(shiXiangCg));
         shiXiangImage.SetActive(true);
         DelegateManager d=new DelegateManager();
             d.addDelegate("我是五河士道，是来救你的",()=>{

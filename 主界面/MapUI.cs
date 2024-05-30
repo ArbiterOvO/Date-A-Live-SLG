@@ -17,7 +17,6 @@ public class MapUI : MonoBehaviour
         instance=this;
     }
     void Start() {
-        GameManager.instance.currentMap=1;
     }
     //进入家场景
     public void enterHome()
@@ -59,7 +58,6 @@ public class MapUI : MonoBehaviour
         tag.SetActive(true);
         tagText.text="是否要前往神社";
         yes.onClick.AddListener(()=>{
-            GameManager.instance.currentMap=2;
             SceneManager.LoadScene("Shrine");
         });
         no.onClick.AddListener(()=>{

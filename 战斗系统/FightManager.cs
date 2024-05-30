@@ -36,7 +36,7 @@ public class FightManager : MonoBehaviour
         //初始化回合
         //isMyTurn=true;
         //初始化power
-        power = GameManager.instance.totalPower;
+        power = GameManager.instance.currentPower;
         //初始化角色
         fightRoles.Clear();
         foreach (BaseRole role in GameManager.instance.rolesInTeam)
@@ -90,9 +90,9 @@ public class FightManager : MonoBehaviour
     //一直要进行判断的技能
     void checkSkill()
     {
-
+        
         //狂三被动
-        if (FightUI.instance.findRoleById(3).GetComponent<FightRole>().died && FightUI.instance.findRoleById(3).GetComponent<FightRole>().deadTime < 1)
+        if (FightUI.instance.findRoleById(3)!=null&&FightUI.instance.findRoleById(3).GetComponent<FightRole>().died && FightUI.instance.findRoleById(3).GetComponent<FightRole>().deadTime < 1)
         {
             Debug.Log("狂三复活");
             StartCoroutine(relive(findBaseFightRoleById(3), findBaseFightRoleById(3).MaxBlood));
@@ -144,7 +144,8 @@ public class FightManager : MonoBehaviour
         int i;
         for (i = 0; i < fightRoles.Count; i++)
         {
-            if (FightUI.instance.findRoleById(fightRoles[i].Id).GetComponent<FightRole>().died)
+            //如果角色死亡或处于异常状态 跳过
+            if (FightUI.instance.findRoleById(fightRoles[i].Id).GetComponent<FightRole>().died||FightUI.instance.findRoleById(fightRoles[i].Id).GetComponent<FightRole>().specialStatus!=FightSpecialStatus.正常)
                 continue;
             if (!fightRoles[i].isActed)
             {
@@ -168,7 +169,15 @@ public class FightManager : MonoBehaviour
         if (fightStatus != FightStatus.敌方回合前置设置)
             return;
         //todo 敌方buff等
-
+        foreach (var role in fightRoles)
+        {
+            if(FightUI.instance.findRoleById(role.Id).GetComponent<FightRole>().specialStatus != FightSpecialStatus.正常)
+            {
+                FightUI.instance.findRoleById(role.Id).GetComponent<FightRole>().statusTime--;
+                if (FightUI.instance.findRoleById(role.Id).GetComponent<FightRole>().statusTime == 0)
+                FightUI.instance.findRoleById(role.Id).GetComponent<FightRole>().specialStatus = FightSpecialStatus.正常;
+            }
+        }
         fightStatus = FightStatus.敌方回合;
         enemyAttack();
     }
@@ -185,6 +194,8 @@ public class FightManager : MonoBehaviour
     {
         foreach (BaseEnemy enemy in enemyRoles)
         {
+            enemy.speicalSkill();
+            yield return new WaitUntil(() => !FightUI.instance.findEnemy(enemy).GetComponent<FightEnemy>().isAttacking);
             enemy.normalAttack();
             yield return new WaitUntil(() => !FightUI.instance.findEnemy(enemy).GetComponent<FightEnemy>().isAttacking);
             yield return new WaitForSeconds(1f);
@@ -466,7 +477,22 @@ public class FightManager : MonoBehaviour
         clearChosenRole();
         role.isActed=true;
     }
-
+    public void healEnemy(BaseEnemy enemy,float rate,int maxUse,GameObject vfxPrefab, AudioClip healClip)
+    {
+        
+        if(enemy.speicalSkillCount>=maxUse)
+        return;
+        FightUI.instance.findEnemy(enemy).GetComponent<FightEnemy>().isAttacking=true;
+        enemy.Blood += enemy.MaxBlood * rate;
+        if (enemy.Blood > enemy.MaxBlood)
+        enemy.Blood=enemy.MaxBlood;
+        enemy.speicalSkillCount++;
+        //设置特效
+        VFXManager.Instance.createVFX(FightUI.instance.findEnemy(enemy).GetComponent<FightEnemy>(),vfxPrefab,FightUI.instance.findEnemy(enemy).transform);
+        //设置音效
+        AudioSource audioSource= FightUI.instance.findEnemy(enemy).GetComponent<AudioSource>();
+        FightSoundManager.Instance.setAudio(audioSource,healClip);
+    }
     public void clearChosenEnemy()
     {
         chosenEnemyNum = 0;

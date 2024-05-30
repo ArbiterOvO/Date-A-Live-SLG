@@ -18,6 +18,7 @@ public class HighPlatFormUI : Singleton<HighPlatFormUI>
     void Start()
     {
         setRandomEvent();
+        remeetKuangSan();
     }
     public void returnSchoolGate()
     {
@@ -144,5 +145,19 @@ public class HighPlatFormUI : Singleton<HighPlatFormUI>
         }
         yield return 0;
     }
-
+    public void remeetKuangSan()
+    {
+        if(GameManager.instance.specialBattleNum == 3)
+        {
+            DialogSystem.instance.startDialog(9);
+            IEnumeratorUtil.fadeIn(KuangSanLing);
+            GameManager.instance.specialBattleNum=0;
+            StartCoroutine(wait());
+        }
+    }
+    IEnumerator wait()
+    {
+        yield return new WaitUntil(() => !DialogSystem.instance.dialogPaneg.activeSelf);
+        IEnumeratorUtil.fadeOut(KuangSanLing);
+    }
 }

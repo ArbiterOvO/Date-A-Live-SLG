@@ -167,6 +167,10 @@ public class BaseRole
     public List<LingJieJing> lingJieJings=new List<LingJieJing>(3);
     //是否拥有
     public bool isHaving; 
+    //特殊事件数
+    public int specialEventNum;
+    //最大特殊事件数
+    public int maxSpecialEventNum;
     public BaseRole(int id,String name,float maxBlood,float cost,float power,float ad,float ap,float def,float mdf)
     {
         this.id=id;
@@ -186,6 +190,8 @@ public class BaseRole
         this.lingJieJings.Add(null);
         this.lingJieJings.Add(null);
         this.lingJieJings.Add(null);
+        specialEventNum=0;
+        maxSpecialEventNum=2;
     }
     public String toString()
     {

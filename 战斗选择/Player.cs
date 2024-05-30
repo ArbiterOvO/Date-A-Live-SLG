@@ -40,6 +40,10 @@ public class Player : MonoBehaviour
             case EventType.事件:
             FightChooseManager.Instance.randomEvent();
             break;
+            case EventType.BOSS:
+            FightChooseManager.Instance.enterFight();
+            ++FightChooseManager.Instance.fightLayerNum;
+            break;
         }
         
     }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class VFXManager : Singleton<VFXManager>
 {
@@ -23,7 +24,10 @@ public class VFXManager : Singleton<VFXManager>
     public GameObject enemyAttack;
     [Header("十香武器")]
     public GameObject wangZuoPrefab;
-
+    [Header("准星预制体")]
+    public GameObject shootStarPrefab;
+    //准星移动速度
+    private float startSpeed=0.01f;
 
 
     //生成特效
@@ -78,5 +82,41 @@ public class VFXManager : Singleton<VFXManager>
             if(VFXParent.transform.GetChild(i).GetComponent<ParticleSystem>().isPaused)
             Destroy(VFXParent.transform.GetChild(i).gameObject);
         }
+    }
+    //敌人射击特效 音效 攻击
+    public void shoot(GameObject self,GameObject target,AudioClip shootClip,float rate,SpecialStatus specialStatus)
+    {
+        StartCoroutine(shootCoroutine(self,target,shootClip,rate,specialStatus));
+    }
+    IEnumerator shootCoroutine(GameObject self,GameObject target,AudioClip shootClip,float rate,SpecialStatus specialStatus)
+    {
+        Transform selfTransform=self.transform;
+        Transform targetTransform=target.transform;
+        FightEnemy fightEnemy=self.GetComponent<FightEnemy>();
+        FightRole fightRole=target.GetComponent<FightRole>();
+
+        GameObject shootStar=Instantiate(shootStarPrefab,selfTransform.position,Quaternion.identity,VFXParent.transform);
+        float time=0;     
+        while (shootStar.transform.position!=targetTransform.position)
+        {
+            time+=Time.deltaTime;
+            if(time>1f)
+            break;
+            shootStar.transform.position=Vector2.Lerp(shootStar.transform.position,targetTransform.position,startSpeed);
+            yield return 0;
+        }
+        Debug.Log("敌人射击");
+        //摧毁准星
+        Destroy(shootStar);
+        //攻击
+        roleUtil.Attack(fightEnemy.enemy,fightRole.role,rate);
+        //音效
+        AudioSource audioSource = FightUI.instance.findRoleById(fightRole.role.Id).GetComponent<AudioSource>();
+        FightSoundManager.Instance.setAudio(audioSource, shootClip);
+        //特殊状态
+        fightRole.GetComponent<FightRole>().specialStatus=specialStatus.statusType;
+        fightRole.GetComponent<FightRole>().statusTime=specialStatus.statusTime;
+        //更改状态
+        fightEnemy.isAttacking=false;
     }
 }
